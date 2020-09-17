@@ -1,6 +1,9 @@
 // apiKey = 5f2033a38bb24c149d79be937ac19471
 const buttonElement = document.getElementById("button");
 const audioElement = document.getElementById("audio");
+const loaderElement = document.getElementById("loader");
+
+loaderElement.setAttribute('hidden', true);
 
 function tellMe(src) {
   VoiceRSS.speech({
@@ -18,7 +21,8 @@ function tellMe(src) {
 // Get joke from a joke api
 async function getJokes() {
   const jokeApi = "https://sv443.net/jokeapi/v2/joke/Programming,Miscellaneous,Pun?blacklistFlags=nsfw,sexist";
-  buttonElement.setAttribute('disabled', true)
+  buttonElement.setAttribute('disabled', true);
+  loaderElement.hidden = false;
   try {
     const joke = await fetch(jokeApi);
     const jokeResponse = await joke.json();
@@ -42,5 +46,6 @@ buttonElement.addEventListener("click", getJokes);
 
 // To keep track of when the joke has ended
 audioElement.addEventListener("ended", () => {
-  buttonElement.disabled = false;  
+  buttonElement.disabled = false; 
+  loaderElement.hidden = true; 
 });
